@@ -1,0 +1,84 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+# -- (Optional) Change Log Level and Format here...
+#     - loglevels [DEBUG, INFO, WARNING, ERROR, CRITICAL]
+#     - format [common, json, logfmt]
+# log:
+#  level: ERROR
+#  format: common
+#  filePath: /var/log/traefik/traefik.log
+
+# -- (Optional) Enable Accesslog and change Format here...
+#     - format [common, json, logfmt]
+# accesslog:
+#   format: common
+#   filePath: /var/log/traefik/access.log
+
+# -- (Optional) Enable API and Dashboard here, don't do in production
+api:
+  dashboard: true
+#  insecure: true
+
+# -- Change EntryPoints here...
+entryPoints:
+  http:
+    address: :80
+    # -- (Optional) Redirect all HTTP to HTTPS
+    # http:
+    #   redirections:
+    #     entryPoint:
+    #       to: websecure
+    #       scheme: https
+  https:
+    address: :443
+  # -- (Optional) Dashboard does this on it's own. Leave it alone.
+#  custom:
+#    address: :8080
+
+http:
+  routers:
+    dashboard:
+      entryPoints:
+        - https
+      rule: Host(`traefik.internal.internaldomain.com`)
+      service: api@internal
+      tls:
+        certResolver: production
+      middlewares:
+        - basic-auth
+  middlewares:
+    basic-auth:
+      basicAuth:
+        usersFile: /etc/traefik/users/users
+
+# -- Configure your CertificateResolver here...
+certificatesResolvers:
+  staging:
+    acme:
+      email: email@domain.com
+      storage: /etc/traefik/certs/acme.json
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+  production:
+    acme:
+      email: email@domain.com
+      storage: /etc/traefik/certs/acme-prod.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+
+providers:
+  docker:
+    # -- (Optional) Enable this, if you want to expose all containers automatically
+    exposedByDefault: false
+  file:
+    directory: /etc/traefik
+    watch: true

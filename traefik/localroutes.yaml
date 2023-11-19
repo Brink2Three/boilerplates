@@ -1,0 +1,67 @@
+http:
+  services:
+    file-browser-local:
+      loadBalancer:
+        servers:
+          - url: "http://filebrowserIP:port/"
+    plex-local:
+      loadBalancer:
+        servers:
+          - url: "http://plexIP:port/"
+    proxmox-local:
+      loadBalancer:
+        serversTransport: selfsigned
+        servers:
+          - url: "https://proxmoxIP:port/"
+    portainer-local:
+      loadBalancer:
+        serversTransport: selfsigned
+        servers:
+          - url: "https://portainerIP:port/"
+    special-local:
+      loadBalancer:
+        serversTransport: selfsigned
+        servers:
+          - url: "https://specialIP:port/"
+
+  routers:
+    file-browser-local:
+      entryPoints:
+        - https
+      rule: "Host(`files.internal.internaldomain.com`)"
+      service: file-browser-local
+      tls:
+        certResolver: production
+    plex-local:
+      entryPoints:
+        - https
+      rule: "Host(`plex.internal.internaldomain.com`)"
+      service: plex-local
+      tls:
+        certResolver: production
+    proxmox-local:
+      entryPoints:
+        - https
+      rule: "Host(`proxmox.internal.internaldomain.com`)"
+      service: proxmox-local
+      tls:
+        certResolver: production
+    portainer-local:
+      entryPoints:
+        - https
+      rule: "Host(`portainer.internal.internaldomain.com`)"
+      service: portainer-local
+      tls:
+        certResolver: production
+    special-local:
+      entryPoints:
+        - https
+      rule: "Host(`special.internal.internaldomain.com`)"
+      service: special-local
+      tls:
+        certResolver: production
+  
+# Skip verifying if a service has a self signed cert on it's internal IP.
+  serversTransports:
+    selfsigned:
+      insecureSkipVerify: True

@@ -1,0 +1,18 @@
+http:
+  services:
+    file-browser:
+      loadBalancer:
+        servers:
+         # if the service is on an external host,
+         # we simply write ip or domain
+          - url: "http://filebrowserIP:port/"
+  routers:
+    file-browser:
+      entryPoints:
+        - https
+      # the web client will be accessible via any paths on the domain
+      # web.example.com
+      rule: "Host(`files.publicdomain.com`)"
+      service: file-browser
+      tls:
+        certResolver: production
