@@ -40,3 +40,4 @@ On the docker host, the root of this traefik folder lives as /etc/traefik. So th
 - The localroutes are for services that are not forwarded to the internet. These only add SSL on top of the service, and I have a DNS entry of `address=/.internal.domainname.com/internal-ip-of-traefik` in my internal dns (pihole) which maps anything.internal.domainname.com to the ip of traefik. This makes things like proxmox, portainer, and plex have an internal address with SSL. 
 
 - You might look at this and go, "wow, that's a lot of middlewares just for the Pihole webUI..." **IT IS...** I don't know why it was so fussy, but to get pihole's webUI to co-operate through traefik, I had to add ALL OF THAT for it to work. 
+  - Reference for this: https://community.traefik.io/t/external-pihole-behind-traefik-redirect-admin/17383/9 
