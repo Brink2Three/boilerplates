@@ -46,6 +46,10 @@ http:
       service: api@internal
       tls:
         certResolver: production
+        domains:
+          - main: internal.internaldomain.com
+            sans:
+              - "*.internal.internaldomain.com"
       middlewares:
         - basic-auth
   middlewares:
