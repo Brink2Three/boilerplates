@@ -42,14 +42,27 @@ http:
     dashboard:
       entryPoints:
         - https
-      rule: Host(`traefik.internal.internaldomain.com`)
+      rule: Host(`traefik.local.domain.com`)
       service: api@internal
       tls:
         certResolver: production
-        domains:
-          - main: internal.internaldomain.com
-            sans:
-              - "*.internal.internaldomain.com"
+        
+        ##### DO NOT LEAVE BOTH OF THE DOMAIN OPTIONS IN. PICK OPTION 1 OR 2 AND COMMENT OUT/DELETE THE OTHER #####
+        
+        # I have found two ways to describe this in the config file.
+        # Option 1 if your two domains are different:
+        domains[0]:
+          - main: "publicdomain.com"
+          - sans: "*.publicdomain.com"
+        domains[1]:
+          - main: "internaldomain.com"
+          - sans: "*.internaldomain.com"
+        # OR Option 2 if you just use a *.local.domain.com option. (This is what I use now)
+        domains[0]:
+          - main: "domain.com"
+          - sans: "*.domain.com"
+          - sans: "local.domain.com"
+          - sans: "*.local.domain.com"
       middlewares:
         - basic-auth
   middlewares:

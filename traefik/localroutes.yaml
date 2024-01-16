@@ -9,8 +9,8 @@ http:
         prefix: /admin
     pihole-redirectregex:
       redirectRegex:
-        regex: "https?://pihole.internal.internaldomain.com/$"
-        replacement: "https://pihole.internal.internaldomain.com/admin/"
+        regex: "https?://pihole.local.domain.com/$"
+        replacement: "https://pihole.local.domain.com/admin/"
     https-redirectscheme:
       redirectScheme:
         scheme: https
@@ -79,35 +79,35 @@ http:
     prometheus-local:
       entryPoints:
         - https
-      rule: "Host(`prometheus.internal.internaldomain.com`)"
+      rule: "Host(`prometheus.local.domain.com`)"
       service: prometheus-local
       tls:
         certResolver: production
     grafana-local:
       entryPoints:
         - https
-      rule: "Host(`grafana.internal.internaldomain.com`)"
+      rule: "Host(`grafana.local.domain.com`)"
       service: grafana-local
       tls:
         certResolver: production
     truenas-local:
       entryPoints:
         - https
-      rule: "Host(`truenas.internal.internaldomain.com`)"
+      rule: "Host(`truenas.local.domain.com`)"
       service: truenas-local
       tls:
         certResolver: production
     unifi-local:
       entryPoints:
         - https
-      rule: "Host(`unifi.internal.internaldomain.com`)"
+      rule: "Host(`unifi.local.domain.com`)"
       service: unifi-local
       tls:
         certResolver: production
     pihole-local:
       entryPoints:
         - https
-      rule: "Host(`pihole.internal.internaldomain.com`)"
+      rule: "Host(`pihole.local.domain.com`)"
       service: pihole-local
       tls:
         certResolver: production
@@ -120,35 +120,35 @@ http:
     file-browser-local:
       entryPoints:
         - https
-      rule: "Host(`files.internal.internaldomain.com`)"
+      rule: "Host(`files.local.domain.com`)"
       service: file-browser-local
       tls:
         certResolver: production
     plex-local:
       entryPoints:
         - https
-      rule: "Host(`plex.internal.internaldomain.com`)"
+      rule: "Host(`plex.local.domain.com`)"
       service: plex-local
       tls:
         certResolver: production
     proxmox-local:
       entryPoints:
         - https
-      rule: "Host(`proxmox.internal.internaldomain.com`)"
+      rule: "Host(`proxmox.local.domain.com`)"
       service: proxmox-local
       tls:
         certResolver: production
     portainer-local:
       entryPoints:
         - https
-      rule: "Host(`portainer.internal.internaldomain.com`)"
+      rule: "Host(`portainer.local.domain.com`)"
       service: portainer-local
       tls:
         certResolver: production
     special-local:
       entryPoints:
         - https
-      rule: "Host(`special.internal.internaldomain.com`)"
+      rule: "Host(`special.local.domain.com`)"
       service: special-local
       tls:
         certResolver: production
