@@ -1,8 +1,4 @@
 http:
- # middlewares:
- #   add-admin:
- #     addPrefix:
- #       prefix: "/admin"
   middlewares:
     pihole-addprefix:
       addPrefix:
@@ -48,33 +44,34 @@ http:
         serversTransport: selfsigned
         servers:
           - url: "https://portainerIP:port/"
-    special-local:
+    wazuh-local:
       loadBalancer:
         serversTransport: selfsigned
         servers:
-          - url: "https://specialIP:port/"
+          - url: "https://wazuhIP:port/"
     prometheus-local:
       loadBalancer:
         servers:
-          - url: "http://serviceIP:port/"
+          - url: "http://prometheusIP:port/"
     grafana-local:
       loadBalancer:
         servers:
-          - url: "https://serviceIP:port/"
+          - url: "https://grafanaIP:port/"
     truenas-local:
       loadBalancer:
         servers:
-          - url: "https://serviceIP/"
+          - url: "https://TrueNASIP/"
     unifi-local:
       loadBalancer:
         serversTransport: selfsigned
         servers:
-          - url: "https://serviceIP:port/"
+          - url: "https://unifiIP:port/"
     pihole-local:
       loadBalancer:
         servers:
-          - url: "http://serviceIP/"
+          - url: "http://piholeIP/"
         passHostHeader: true
+  
   routers:
     prometheus-local:
       entryPoints:
@@ -116,7 +113,6 @@ http:
         - pihole-redirectregex
 #        - pihole-addprefix
         - https-redirectscheme
-
     file-browser-local:
       entryPoints:
         - https
@@ -145,11 +141,11 @@ http:
       service: portainer-local
       tls:
         certResolver: production
-    special-local:
+    wazuh-local:
       entryPoints:
         - https
-      rule: "Host(`special.local.domain.com`)"
-      service: special-local
+      rule: "Host(`wazuh.local.domain.com`)"
+      service: wazuh-local
       tls:
         certResolver: production
   

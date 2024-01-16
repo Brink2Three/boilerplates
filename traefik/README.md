@@ -26,7 +26,7 @@ services:
       - /etc/traefik:/etc/traefik
       - traefik-ssl-certs:/ssl-certs
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    # -- (Optional) When using Cloudflare as Cert Resolver
+#### -- (Optional) When using Cloudflare as Cert Resolver. This can be moved to a .env file if your dockerfile storage is insecure.
     environment:
       - CLOUDFLARE_EMAIL=email@domain.com
       - CLOUDFLARE_API_KEY=API KEY HERE
