@@ -46,21 +46,11 @@ http:
       service: api@internal
       tls:
         certResolver: production
-        
-        ##### DO NOT LEAVE BOTH OF THE DOMAIN OPTIONS IN. PICK OPTION 1 OR 2 AND COMMENT OUT/DELETE THE OTHER #####
-        
-        # I have found two ways to describe this in the config file.
-        # Option 1 if your two domains are different:
-        domains[0]:
+        # I had found two ways to describe these domain settings in the config file, but then the first one stopped working, 
+        # and I had to modify the second one to get it to work. Here's the updated config compatible with v2.10.7
+        domains:
           - main: "publicdomain.com"
           - sans: "*.publicdomain.com"
-        domains[1]:
-          - main: "internaldomain.com"
-          - sans: "*.internaldomain.com"
-        # OR Option 2 if you just use a *.local.domain.com option. (This is what I use now)
-        domains[0]:
-          - main: "domain.com"
-          - sans: "*.domain.com"
           - sans: "local.domain.com"
           - sans: "*.local.domain.com"
       middlewares:
