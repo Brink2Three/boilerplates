@@ -1,6 +1,6 @@
 ## Strongswan public example configurations ##
 
-Strongswan building block, often used to build fast, secure VPN tunnels using the standard IKEv2/IPsec protocols. 
+Strongswan is a building block, often used to build fast, secure VPN tunnels using the standard IKEv2/IPsec protocols. 
 The docs here will serve as examples for how to install and configure Strongswan on Ubuntu 22.04 and 24.04 LTS versions. 
 
 See install.md for the install process on ubuntu, and check the /configs folder for example configurations (they are labeled depending on how you plan to use them.)
