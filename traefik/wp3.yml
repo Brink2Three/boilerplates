@@ -1,0 +1,18 @@
+http:
+  services:
+    wordpress3:
+      loadBalancer:
+        servers:
+          - url: "http://10.80.0.232:80/"
+        passHostHeader: true
+  routers:
+    wordpress3:
+      entryPoints:
+        - https
+      rule: "Host(`www.wordpress3.com`)"
+      service: wordpress3
+      tls:
+        certResolver: production
+#      middlewares:
+#        - default-headers
+#       - https-redirectscheme

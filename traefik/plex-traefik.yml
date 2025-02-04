@@ -2,17 +2,13 @@ http:
   services: 
     plex-public: 
       loadBalancer: 
-        servers: 
-         # if the service is on an external host, 
-         # we simply write ip or domain 
-          - url: "http://plexIPaddress:port/" 
+        servers:  
+          - url: "http://10.80.0.217:32400/" 
   routers: 
     plex-public: 
       entryPoints: 
         - https 
-      # the web client will be accessible via any paths on the domain 
-      # web.example.com 
-      rule: "Host(`plex.publicdomain.com`)" 
+      rule: "Host(`plex.yourDomain.com`)" 
       service: plex-public 
       tls: 
         certResolver: production

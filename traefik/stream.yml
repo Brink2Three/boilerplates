@@ -1,18 +1,18 @@
 http: 
   services: 
-    owncast-public: 
+    streamservice: 
       loadBalancer: 
         servers: 
          # if the service is on an external host, 
          # we simply write ip or domain 
-          - url: "http://owncastserverIP:8080/" 
+          - url: "http://10.80.0.230:8069/" 
   routers: 
-    owncast-public: 
+    streamservice: 
       entryPoints: 
         - https 
       # the web client will be accessible via any paths on the domain 
       # web.example.com 
-      rule: "Host(`streams.publicdomain.com`)" 
-      service: owncast-public 
+      rule: "Host(`streams.yourDomain.com`)" 
+      service: streamservice 
       tls: 
         certResolver: production

@@ -1,12 +1,16 @@
 http:
+ # middlewares:
+ #   add-admin:
+ #     addPrefix:
+ #       prefix: "/admin"
   middlewares:
     pihole-addprefix:
       addPrefix:
         prefix: /admin
     pihole-redirectregex:
       redirectRegex:
-        regex: "https?://pihole.local.domain.com/$"
-        replacement: "https://pihole.local.domain.com/admin/"
+        regex: "https?://pihole.local.yourDomain.com/$"
+        replacement: "https://pihole.local.yourDomain.com/admin/"
     https-redirectscheme:
       redirectScheme:
         scheme: https
@@ -24,87 +28,139 @@ http:
         customFrameOptionsValue: SAMEORIGIN
         customRequestHeaders:
           X-Forwarded-Proto: https
-    
+    local-ipallowlist:
+      ipAllowList:
+        sourceRange:
+          - "10.80.0.1/23"
+          - "10.120.10.0/24"
+
+
   services:
+    gitlab-local:
+      loadBalancer:
+        servers:
+         - url: "http://10.80.0.94/"
+    imich-local:
+      loadBalancer:
+        servers:
+          - url: "http://10.80.0.217:30041/"
     file-browser-local:
       loadBalancer:
         servers:
-          - url: "http://filebrowserIP:port/"
+          - url: "http://10.80.0.217:10187/"
     plex-local:
       loadBalancer:
         servers:
-          - url: "http://plexIP:port/"
+          - url: "http://10.80.0.217:32400/"
     proxmox-local:
       loadBalancer:
         serversTransport: selfsigned
         servers:
-          - url: "https://proxmoxIP:port/"
+          - url: "https://10.80.0.203:8006/"
     portainer-local:
       loadBalancer:
         serversTransport: selfsigned
         servers:
-          - url: "https://portainerIP:port/"
+          - url: "https://10.80.0.230:9443/"
     wazuh-local:
       loadBalancer:
         serversTransport: selfsigned
         servers:
-          - url: "https://wazuhIP:port/"
+          - url: "https://10.80.0.107/"
     prometheus-local:
       loadBalancer:
         servers:
-          - url: "http://prometheusIP:port/"
+          - url: "https://10.80.0.230:9090/"
     grafana-local:
       loadBalancer:
         servers:
-          - url: "https://grafanaIP:port/"
+          - url: "https://10.80.0.230:3010/"
     truenas-local:
       loadBalancer:
         servers:
-          - url: "https://TrueNASIP/"
+          - url: "https://10.80.0.217/"
     unifi-local:
       loadBalancer:
         serversTransport: selfsigned
         servers:
-          - url: "https://unifiIP:port/"
+          - url: "https://10.80.0.6:8443/"
     pihole-local:
       loadBalancer:
         servers:
-          - url: "http://piholeIP/"
+          - url: "http://10.80.0.2/"
         passHostHeader: true
-  
+    ollama-local:
+      loadBalancer:
+        servers:
+          - url: "http://10.80.0.27:8080/"
   routers:
+    gitlab-local:
+      entryPoints:
+        - https
+      rule: "Host(`gitlab.local.yourDomain.com`)"
+      service: gitlab-local
+      tls:
+        certResolver: production
+      middlewares:
+        - local-ipallowlist
+    imich-local:
+      entryPoints:
+        - https
+      rule: "Host(`photos.local.yourDomain.com`)"
+      service: imich-local
+      tls:
+        certResolver: production
+      middlewares:
+        - local-ipallowlist
+    ollama-local:
+      entryPoints:
+        - https
+      rule: "Host(`chat.local.yourDomain.com`)"
+      service: ollama-local
+      tls:
+        certResolver: production
+      middlewares:
+        - local-ipallowlist
     prometheus-local:
       entryPoints:
         - https
-      rule: "Host(`prometheus.local.domain.com`)"
+      rule: "Host(`prometheus.local.yourDomain.com`)"
       service: prometheus-local
       tls:
         certResolver: production
+      middlewares:
+        - local-ipallowlist
     grafana-local:
       entryPoints:
         - https
-      rule: "Host(`grafana.local.domain.com`)"
+      rule: "Host(`grafana.local.yourDomain.com`)"
       service: grafana-local
       tls:
         certResolver: production
+      middlewares:
+        - local-ipallowlist
     truenas-local:
       entryPoints:
         - https
-      rule: "Host(`truenas.local.domain.com`)"
+      rule: "Host(`truenas.local.yourDomain.com`)"
       service: truenas-local
       tls:
         certResolver: production
+      middlewares:
+        - local-ipallowlist
     unifi-local:
       entryPoints:
         - https
-      rule: "Host(`unifi.local.domain.com`)"
+      rule: "Host(`unifi.local.yourDomain.com`)"
       service: unifi-local
       tls:
         certResolver: production
+      middlewares:
+        - local-ipallowlist
     pihole-local:
       entryPoints:
         - https
-      rule: "Host(`pihole.local.domain.com`)"
+      rule: "Host(`pihole.local.yourDomain.com`)"
       service: pihole-local
       tls:
         certResolver: production
@@ -113,43 +169,54 @@ http:
         - pihole-redirectregex
 #        - pihole-addprefix
         - https-redirectscheme
+        - local-ipallowlist
     file-browser-local:
       entryPoints:
         - https
-      rule: "Host(`files.local.domain.com`)"
+      rule: "Host(`files.local.yourDomain.com`)"
       service: file-browser-local
       tls:
         certResolver: production
+      middlewares:
+        - local-ipallowlist
     plex-local:
       entryPoints:
         - https
-      rule: "Host(`plex.local.domain.com`)"
+      rule: "Host(`plex.local.yourDomain.com`)"
       service: plex-local
       tls:
         certResolver: production
+      middlewares:
+        - local-ipallowlist
     proxmox-local:
       entryPoints:
         - https
-      rule: "Host(`proxmox.local.domain.com`)"
+      rule: "Host(`proxmox.local.yourDomain.com`)"
       service: proxmox-local
       tls:
         certResolver: production
+      middlewares:
+        - local-ipallowlist
     portainer-local:
       entryPoints:
         - https
-      rule: "Host(`portainer.local.domain.com`)"
+      rule: "Host(`portainer.local.yourDomain.com`)"
       service: portainer-local
       tls:
         certResolver: production
+      middlewares:
+        - local-ipallowlist
     wazuh-local:
       entryPoints:
         - https
-      rule: "Host(`wazuh.local.domain.com`)"
+      rule: "Host(`wazuh.local.yourDomain.com`)"
       service: wazuh-local
       tls:
         certResolver: production
+      middlewares:
+        - local-ipallowlist
   
-# Skip verifying if a service has a self signed cert on it's internal IP.  
+# Skip verifying if a service has a self signed cert on the IP.  
   serversTransports:
     selfsigned:
       insecureSkipVerify: True

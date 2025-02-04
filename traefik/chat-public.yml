@@ -1,0 +1,14 @@
+http:
+  services:
+    ollama:
+      loadBalancer:
+        servers:
+          - url: "http://10.80.0.27:8080/"
+  routers:
+    ollama:
+      entryPoints:
+        - https
+      rule: "Host(`chat.yourDomain.com`)"
+      service: ollama
+      tls:
+        certResolver: production

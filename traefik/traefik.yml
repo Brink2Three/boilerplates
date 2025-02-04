@@ -6,15 +6,29 @@ global:
 #     - loglevels [DEBUG, INFO, WARNING, ERROR, CRITICAL]
 #     - format [common, json, logfmt]
 log:
-  level: WARNING
-  format: common
+  level: DEBUG
+  format: json
   filePath: /etc/traefik/log/traefik.log
 
 # -- (Optional) Enable Accesslog and change Format here...
 #     - format [common, json, logfmt]
 accesslog:
-  format: common
+  format: json
   filePath: /etc/traefik/log/access.log
+
+tracing: {}
+#  addInternals: true
+#  sampleRate: 1
+
+metrics:
+  prometheus:
+    entrypoint: metrics
+    addRoutersLabels: true
+    buckets:
+      - 0.1
+      - 0.3
+      - 1.2
+      - 5.0
 
 # -- (Optional) Enable API and Dashboard here, don't do in production
 api:
@@ -33,6 +47,8 @@ entryPoints:
     #       scheme: https
   https:
     address: :443
+  metrics:
+    address: :9091
   # -- (Optional) Dashboard does this on it's own. Leave it alone.
 #  custom:
 #    address: :8080
@@ -42,17 +58,15 @@ http:
     dashboard:
       entryPoints:
         - https
-      rule: Host(`traefik.local.domain.com`)
+      rule: Host(`traefik.local.yourDomain.com`)
       service: api@internal
       tls:
         certResolver: production
-        # I had found two ways to describe these domain settings in the config file, but then the first one stopped working, 
-        # and I had to modify the second one to get it to work. Here's the updated config compatible with v2.10.7
         domains:
-          - main: "publicdomain.com"
-          - sans: "*.publicdomain.com"
-          - sans: "local.domain.com"
-          - sans: "*.local.domain.com"
+         - main: "yourDomain.com"
+         - sans: "*.yourDomain.com"
+         - sans: "local.yourDomain.com"
+         - sans: "*.local.yourDomain.com"
       middlewares:
         - basic-auth
   middlewares:
@@ -64,7 +78,7 @@ http:
 certificatesResolvers:
   staging:
     acme:
-      email: email@domain.com
+      email: email@yourDomain.com
       storage: /etc/traefik/certs/acme.json
       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
       dnsChallenge:
@@ -74,14 +88,27 @@ certificatesResolvers:
           - "8.8.8.8:53"
   production:
     acme:
-      email: email@domain.com
+      email: email@yourDomain.com
       storage: /etc/traefik/certs/acme-prod.json
       dnsChallenge:
         provider: cloudflare
         resolvers:
           - "1.1.1.1:53"
           - "8.8.8.8:53"
-
+  gen-stage:
+    acme:
+      email: email@yourDomain.com
+      storage: /etc/traefik/certs/acme-gen-stage.json
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: http
+  generic:
+    acme:
+      email: email@yourDomain.com
+      storage: /etc/traefik/certs/acme-generic.json
+      # tlsChallenge: {}
+      httpChallenge:
+        entryPoint: http
 providers:
   docker:
     # -- (Optional) Enable this, if you want to expose all containers automatically
