@@ -1,0 +1,14 @@
+http:
+  services:
+    gamedash:
+      loadBalancer:
+        servers:
+          - url: "http://10.80.0.245:8080/"
+  routers:
+    gamedash:
+      entryPoints:
+        - https
+      rule: "Host(`gamedash.yourDomain.com`)"
+      service: gamedash
+      tls:
+        certResolver: production

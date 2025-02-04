@@ -1,0 +1,18 @@
+http:
+  services:
+    wordpress2:
+      loadBalancer:
+        servers:
+          - url: "http://10.80.0.230:8017/"
+        passHostHeader: false
+  routers:
+    wordpress2:
+      entryPoints:
+        - https
+      rule: "Host(`www.wordpress2.com`)"
+      service: wordpress2
+      tls:
+        certResolver: production
+#      middlewares:
+#        - default-headers
+#       - https-redirectscheme
