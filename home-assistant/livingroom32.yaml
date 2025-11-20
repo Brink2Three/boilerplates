@@ -1,0 +1,55 @@
+esphome:
+  name: livingroom32
+  friendly_name: livingroom32
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Example configuration entry
+i2c:
+  sda: 21
+  scl: 22
+
+sensor:
+  - platform: ccs811
+    eco2:
+      name: "CCS811 eCO2 Value"
+    tvoc:
+      name: "CCS811 Total Volatile Organic Compound"
+    address: 0x5A
+    update_interval: 60s
+
+  - platform: dht
+    model: DHT11
+    pin: 25
+    temperature:
+      name: "Living Room Temperature"
+    humidity:
+      name: "Living Room Humidity"
+    update_interval: 60s
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Livingroom32 Fallback Hotspot"
+    password: "rFKuTBCWr9Er"
+
+captive_portal:
+    
