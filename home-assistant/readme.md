@@ -37,3 +37,6 @@ ESP side | to | part side
 flashing esphome to sparkfun32: https://github.com/esphome/esphome-flasher/releases
 
 Better flasher for regular ESP32s: https://web.esphome.io/
+
+# Once the device is conencted...
+Once you see it in ESPhome, select the device and add the yaml config content from livingroom32. Adjusting the secret variables to match your configuration. 
