@@ -33,7 +33,7 @@ ESP side | to | part side
     - DHT 11: https://www.microcenter.com/product/618777/inland-dht11-temperature-humidity-moisture-sensor-module
     - CCS-811: https://www.microcenter.com/product/632703/inland-ccs811-air-quality-sensor-module
 
-# If you need to flash espohome manually...
+# If you need to flash esphome manually...
 flashing esphome to sparkfun32: https://github.com/esphome/esphome-flasher/releases
 
 Better flasher for regular ESP32s: https://web.esphome.io/
