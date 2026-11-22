@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Elara found the antique music box hidden in her grandfather's attic. It was carved with scenes of a vibrant, forgotten summer. When she wound the tiny silver key, a melancholic waltz filled the dusty air, a rhythm of lost laughter.\n\nA faded photograph slipped from the compartment. It showed a young man, smiling, holding her hand—her grandfather, whom she believed had died decades ago. \n\nThe music swelled, impossibly sweet. He wasn't a ghost; he was a memory preserved in mahogany and sound. The box played on, a beautiful echo of a life rediscovered."
+      }
+    }
+  ],
+  "created": 1795324167,
+  "model": "/path/to/your/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b12531-e4b620af1",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 499,
+    "prompt_tokens": 27,
+    "total_tokens": 526,
+    "prompt_tokens_details": {
+      "cached_tokens": 16
+    }
+  },
+  "id": "chatcmpl-TgmzII9VSU69eKQt5RIHHmQMYJ3gh420",
+  "timings": {
+    "cache_n": 16,
+    "prompt_n": 11,
+    "prompt_ms": 52.9,
+    "prompt_per_token_ms": 4.809090909090909,
+    "prompt_per_second": 207.93950850661625,
+    "predicted_n": 499,
+    "predicted_ms": 4213.569,
+    "predicted_per_token_ms": 8.460981927710844,
+    "predicted_per_second": 118.18959176887812
+  }
+}
